@@ -1,20 +1,20 @@
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import AppNavigator from './src/navigation/AppNavigator'
 
-import Campings from "./src/screens/Campings";
-import Settings from './src/screens/Settings'
-
-const navigator = createStackNavigator(
-  {
-    Campings: Campings,
-    Settings: Settings,
-  },
-  {
-    initialRouteName: "Campings",
-    defaultNavigationOptions: {
-      title: "Campings",
-    },
+export default class App extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <AppNavigator />
+      </View>
+    );
   }
-);
+}
 
-export default createAppContainer(navigator);
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
+});

@@ -1,7 +1,14 @@
 import * as React from "react";
-import { StyleSheet, Text, View, Dimensions, Image } from "react-native";
-
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import MapView from "react-native-maps";
+
 import { Ionicons, FontAwesome, SimpleLineIcons } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -36,7 +43,9 @@ export default class Campings extends React.Component {
             </View>
           </View>
           <View style={{ alignItems: "baseline", alignItems: "flex-end" }}>
-            <Ionicons name="ios-settings" size={30} color="black" />
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('Settings')}>
+              <Ionicons name="ios-settings" size={30} color="black" />
+            </TouchableOpacity>
           </View>
         </View>
         {this.renderTabs()}
@@ -183,9 +192,7 @@ export default class Campings extends React.Component {
             <Text style={{ fontSize: 14, color: "grey", paddingVertical: 3 }}>
               {camping.description}
             </Text>
-            <View
-              style={{ flex: 1, flexDirection: "row", marginRight: 90}}
-            >
+            <View style={{ flex: 1, flexDirection: "row", marginRight: 90 }}>
               <View style={styles.campingInfo}>
                 <FontAwesome name="star" color="#FFBA5A" size={14} />
                 <Text style={{ marginLeft: 4, color: "#FFBA5A", fontSize: 14 }}>
