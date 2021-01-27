@@ -9,10 +9,110 @@ import {
 } from "react-native";
 import MapView from "react-native-maps";
 
-import { Ionicons, FontAwesome, SimpleLineIcons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  FontAwesome,
+  Foundation,
+  SimpleLineIcons,
+} from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 
+const { Marker } = MapView;
 const { width, height } = Dimensions.get("screen");
+
+const campings = [
+  {
+    id: 1,
+    type: "tent",
+    name: "Camping Paradise",
+    description: "Popular sport for trekkers",
+    stars: 4.9,
+    distance: 2.3,
+    price: "Free",
+    latlng: {
+      latitude: 44.15958062143673,
+      longitude: 24.156018573320032,
+    },
+    image:
+      "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=130",
+  },
+
+  {
+    id: 2,
+    type: "rv",
+    name: "Lake Florida",
+    description: "This is for all sunset lovers",
+    stars: 4.7,
+    distance: 3.1,
+    price: "Free",
+    latlng: {
+      latitude: 44.15358062143673,
+      longitude: 24.163018573320032,
+    },
+    image:
+      "https://images.unsplash.com/photo-1486915309851-b0cc1f8a0084?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NXx8Y2FtcGluZ3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=130",
+  },
+  {
+    id: 3,
+    type: "rv",
+    name: "Lake Lungeni",
+    description: "Popular sport for trekkers",
+    stars: 4.9,
+    distance: 2.1,
+    price: "Free",
+    latlng: {
+      latitude: 44.16158062143673,
+      longitude: 24.163018573320032,
+    },
+    image:
+      "https://images.unsplash.com/photo-1563198804-aeb88e686935?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1945&q=80",
+  },
+  {
+    id: 4,
+    type: "tent",
+    name: "Lake Gubaucea",
+    description: "This is for all fish lovers",
+    stars: 4.3,
+    distance: 5.5,
+    price: "Free",
+    latlng: {
+      latitude: 44.16458062143673,
+      longitude: 24.165018573320032,
+    },
+    image:
+      "https://images.unsplash.com/photo-1516361728389-998730856765?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+  },
+  {
+    id: 5,
+    type: "rv",
+    name: "Lake Grozavesti",
+    description: "This is exotic",
+    stars: 4.7,
+    distance: 3.1,
+    price: "Free",
+    latlng: {
+      latitude: 44.16478062143673,
+      longitude: 24.166018573320032,
+    },
+    image:
+      "https://images.unsplash.com/photo-1548109465-dbf58cfd298f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80",
+  },
+  {
+    id: 6,
+    type: "tent",
+    name: "Ramdom Lake",
+    description: "This is urban area",
+    stars: 4.2,
+    distance: 4.1,
+    price: "Free",
+    latlng: {
+      latitude: 44.16278062143673,
+      longitude: 24.166018573320032,
+    },
+    image:
+      "https://images.unsplash.com/photo-1605032659978-a5bd04094a16?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+  },
+];
 
 export default class Campings extends React.Component {
   static navigationOptions = {
@@ -21,6 +121,17 @@ export default class Campings extends React.Component {
 
   state = {
     active: "all",
+    campings: campings,
+  };
+
+  handleTab = (tabKey) => {
+    let newCampings = campings;
+
+    if (tabKey !== "all") {
+      newCampings = campings.filter((camping) => camping.type === tabKey);
+    }
+
+    this.setState({ active: tabKey, campings: newCampings });
   };
 
   renderHeader() {
@@ -66,7 +177,7 @@ export default class Campings extends React.Component {
               styles.tabTitle,
               active === "all" ? styles.activeTabTitle : null,
             ]}
-            onPress={() => this.setState({ active: "all" })}
+            onPress={() => this.handleTab("all")}
           >
             All Spots
           </Text>
@@ -77,7 +188,7 @@ export default class Campings extends React.Component {
               styles.tabTitle,
               active === "tent" ? styles.activeTabTitle : null,
             ]}
-            onPress={() => this.setState({ active: "tent" })}
+            onPress={() => this.handleTab("tent")}
           >
             Tenting
           </Text>
@@ -88,7 +199,7 @@ export default class Campings extends React.Component {
               styles.tabTitle,
               active === "rv" ? styles.activeTabTitle : null,
             ]}
-            onPress={() => this.setState({ active: "rv" })}
+            onPress={() => this.handleTab("rv")}
           >
             RV Camping
           </Text>
@@ -98,84 +209,40 @@ export default class Campings extends React.Component {
   }
 
   renderMap() {
+    const campingMarker = ({ type }) => (
+      <View style={[styles.marker, styles[`${type}Marker`]]}>
+        {type === "rv" ? (
+          <FontAwesome name="truck" size={18} color="#FFF" />
+        ) : (
+          <Foundation name="mountains" size={18} color="#FFF" />
+        )}
+      </View>
+    );
+
     return (
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude: 44.15958062143673,
-          longitude: 24.161018573320032,
-          latitudeDelta: 0.019,
-          longitudeDelta: 0.019,
-        }}
-      />
+      <View>
+        <MapView
+          showsMyLocationButton
+          style={styles.map}
+          initialRegion={{
+            latitude: 44.15958062143673,
+            longitude: 24.161018573320032,
+            latitudeDelta: 0.019,
+            longitudeDelta: 0.019,
+          }}
+        >
+          {this.state.campings.map((marker) => (
+            <Marker key={`marker-${marker.id}`} coordinate={marker.latlng}>
+              {campingMarker(marker)}
+            </Marker>
+          ))}
+        </MapView>
+      </View>
     );
   }
 
   renderList() {
-    const campings = [
-      {
-        id: 1,
-        name: "Camping Paradise",
-        description: "Popular sport for trekkers",
-        stars: 4.9,
-        distance: 2.3,
-        price: "Free",
-        image:
-          "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=130",
-      },
-      {
-        id: 2,
-        name: "Lake Florida",
-        description: "This is for all sunset lovers",
-        stars: 4.7,
-        distance: 3.1,
-        price: "Free",
-        image:
-          "https://images.unsplash.com/photo-1486915309851-b0cc1f8a0084?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NXx8Y2FtcGluZ3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=130",
-      },
-      {
-        id: 3,
-        name: "Lake Lungeni",
-        description: "Popular sport for trekkers",
-        stars: 4.9,
-        distance: 2.1,
-        price: "Free",
-        image:
-          "https://images.unsplash.com/photo-1563198804-aeb88e686935?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1945&q=80",
-      },
-      {
-        id: 4,
-        name: "Lake Gubaucea",
-        description: "This is for all fish lovers",
-        stars: 4.3,
-        distance: 5.5,
-        price: "Free",
-        image:
-          "https://images.unsplash.com/photo-1516361728389-998730856765?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-      },
-      {
-        id: 5,
-        name: "Lake Grozavesti",
-        description: "This is exotic",
-        stars: 4.7,
-        distance: 3.1,
-        price: "Free",
-        image:
-          "https://images.unsplash.com/photo-1548109465-dbf58cfd298f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80",
-      },
-      {
-        id: 6,
-        name: "Ramdom Lake",
-        description: "This is urban area",
-        stars: 4.2,
-        distance: 4.1,
-        price: "Free",
-        image:
-          "https://images.unsplash.com/photo-1605032659978-a5bd04094a16?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-      },
-    ];
-
-    return campings.map((camping) => {
+    return this.state.campings.map((camping) => {
       return (
         <View style={styles.camping} key={`camping-list-${camping.id}`}>
           <View style={{ flex: 1, overflow: "hidden" }}>
@@ -266,6 +333,21 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#FF7657",
   },
+  marker: {
+    width: 32,
+    height: 32,
+    borderRadius: 28,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#FFF",
+  },
+  rvMarker: {
+    backgroundColor: "#FFBA5A",
+  },
+  tentMarker: {
+    backgroundColor: "#FF7657",
+  },
   tabs: {
     flex: 0.3,
     flexDirection: "row",
@@ -273,7 +355,6 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   tab: {
-    paddingHorizontal: 14,
     marginHorizontal: 10,
     borderBottomWidth: 3,
     borderBottomColor: "transparent",
@@ -282,7 +363,8 @@ const styles = StyleSheet.create({
     color: "black",
     fontWeight: "bold",
     fontSize: 16,
-    marginBottom: 10,
+    paddingHorizontal: 16,
+    paddingBottom: 12,
   },
   activeTab: {
     borderBottomColor: "#FF7657",
