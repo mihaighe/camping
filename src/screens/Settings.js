@@ -30,7 +30,7 @@ export default class Settings extends React.Component {
   renderHeader() {
     return (
       <View style={styles.header}>
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, paddingLeft: 15 }}>
           <TouchableOpacity
             onPress={() => this.props.navigation.navigate("Campings")}
           >
@@ -40,8 +40,12 @@ export default class Settings extends React.Component {
         <View style={{ flex: 1, alignItems: "center" }}>
           <Text style={styles.title}>Filter</Text>
         </View>
-        <View style={{ flex: 1, alignItems: "flex-end" }}>
-          <Ionicons name="ios-search" size={30} />
+        <View style={{ flex: 1, alignItems: "flex-end", paddingRight: 15 }}>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate("Campings")}
+          >
+            <Ionicons name="ios-search" size={30} />
+          </TouchableOpacity>
         </View>
       </View>
     );
@@ -281,7 +285,7 @@ export default class Settings extends React.Component {
                 </Text>
                 <Switch
                   value={option_full}
-                  trackColor={{ true: "#FF7657" }}
+                  trackColor={{ true: "#FF7657", false: "#D3D3D3" }}
                   thumbColor="white"
                   onValueChange={() => {
                     this.setState({ option_full: !option_full });
@@ -293,7 +297,7 @@ export default class Settings extends React.Component {
                 <Text>Show only highly rated spots</Text>
                 <Switch
                   value={option_rated}
-                  trackColor={{ true: "#FF7657" }}
+                  trackColor={{ true: "#FF7657", false: "#D3D3D3" }}
                   thumbColor="white"
                   onValueChange={() => {
                     this.setState({ option_rated: !option_rated });
@@ -305,7 +309,7 @@ export default class Settings extends React.Component {
                 <Text>Show only Free spots</Text>
                 <Switch
                   value={option_free}
-                  trackColor={{ true: "#FF7657" }}
+                  trackColor={{ true: "#FF7657", false: "#D3D3D3" }}
                   thumbColor="white"
                   onValueChange={() => {
                     this.setState({ option_free: !option_free });
@@ -329,7 +333,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     height: height * 0.1,
     width: width,
-    marginTop: 35,
+    marginTop: 50,
   },
   section: {
     flexDirection: "column",
