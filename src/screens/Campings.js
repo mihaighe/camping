@@ -38,12 +38,14 @@ export default class Campings extends React.Component {
                 Detected Location
               </Text>
               <Text style={{ fontSize: 16, fontWeight: "300" }}>
-                Northern Islands()
+                Csokanest Islands()
               </Text>
             </View>
           </View>
           <View style={{ alignItems: "baseline", alignItems: "flex-end" }}>
-            <TouchableOpacity onPress={() => this.props.navigation.navigate('Settings')}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("Settings")}
+            >
               <Ionicons name="ios-settings" size={30} color="black" />
             </TouchableOpacity>
           </View>
@@ -100,10 +102,10 @@ export default class Campings extends React.Component {
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: 37.78825,
-          longitude: -122.4324,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421,
+          latitude: 44.15958062143673,
+          longitude: 24.161018573320032,
+          latitudeDelta: 0.019,
+          longitudeDelta: 0.019,
         }}
       />
     );
@@ -133,43 +135,43 @@ export default class Campings extends React.Component {
       },
       {
         id: 3,
-        name: "Camping Paradise",
+        name: "Lake Lungeni",
         description: "Popular sport for trekkers",
         stars: 4.9,
-        distance: 2.3,
+        distance: 2.1,
         price: "Free",
         image:
-          "https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=130",
+          "https://images.unsplash.com/photo-1563198804-aeb88e686935?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1945&q=80",
       },
       {
         id: 4,
-        name: "Lake Florida",
-        description: "This is for all sunset lovers",
-        stars: 4.7,
-        distance: 3.1,
+        name: "Lake Gubaucea",
+        description: "This is for all fish lovers",
+        stars: 4.3,
+        distance: 5.5,
         price: "Free",
         image:
-          "https://images.unsplash.com/photo-1486915309851-b0cc1f8a0084?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NXx8Y2FtcGluZ3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=130",
+          "https://images.unsplash.com/photo-1516361728389-998730856765?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
       },
       {
         id: 5,
-        name: "Lake Florida",
-        description: "This is for all sunset lovers",
+        name: "Lake Grozavesti",
+        description: "This is exotic",
         stars: 4.7,
         distance: 3.1,
         price: "Free",
         image:
-          "https://images.unsplash.com/photo-1486915309851-b0cc1f8a0084?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NXx8Y2FtcGluZ3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=130",
+          "https://images.unsplash.com/photo-1548109465-dbf58cfd298f?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1355&q=80",
       },
       {
         id: 6,
-        name: "Lake Florida",
-        description: "This is for all sunset lovers",
-        stars: 4.7,
-        distance: 3.1,
+        name: "Ramdom Lake",
+        description: "This is urban area",
+        stars: 4.2,
+        distance: 4.1,
         price: "Free",
         image:
-          "https://images.unsplash.com/photo-1486915309851-b0cc1f8a0084?ixid=MXwxMjA3fDB8MHxzZWFyY2h8NXx8Y2FtcGluZ3xlbnwwfHwwfA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=900&q=130",
+          "https://images.unsplash.com/photo-1605032659978-a5bd04094a16?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
       },
     ];
 
